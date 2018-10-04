@@ -16,6 +16,16 @@ function initTimer(packages)
     initGUIs('timer.ini');
     initGUIs('timer_machineSpecific.ini'); % introduces packagesPath to state.timer struct.
     
+    state.cycle.isCommonToAllPositions={'randomize' ...
+        'holdDAQUpdates'...
+        'writeProtect'...
+        'useCyclePos'...
+        'endAfterCycle'...
+        };
+		cycle.randomize=state.cycle.randomize;		
+		cycle.writeProtect=state.cycle.writeProtect;		
+		cycle.useCyclePos=state.cycle.useCyclePos;		    
+    
     makeTimerPackagesMenu;  % Build Packages Menu in Main Controls ans state.timer struct.
     
     initNotebooks; % Init. Notebook GUI

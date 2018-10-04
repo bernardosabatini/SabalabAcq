@@ -34,14 +34,14 @@ function status=timerCallPackageFunctions(type, package, force)
                 || (force && state.timer.initializedPackages(timerPackageIndex(pList{counter})))
 			funcName=['timer' type '_' pList{counter}];
 			if exist(funcName, 'file')==2
- 					disp(['CALLING:  ' funcName]);
+ 	%				disp(['CALLING:  ' funcName]);
 				if nargout(funcName)==1
 					status(counter)=eval(funcName);
 				else
 					eval(funcName);
 					status(counter)=1;
 				end
- 					disp(['           Done']);
+ 	%				disp(['           Done']);
 			end
 		else
 			status(counter)=-1;

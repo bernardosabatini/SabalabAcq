@@ -4,6 +4,10 @@ function validPosition=findValidCyclePosition
 	validPosition=0;
 	
 	if state.cycle.randomize
+        if isempty(state.internal.randomPositionsList);
+            setupCycleRandomList
+        end
+        
 		fullcycle=0;
 		first=1;
 		startingPosition=state.internal.randomPosition;
@@ -28,7 +32,7 @@ function validPosition=findValidCyclePosition
             else
                 % if there is no function to call, is a package active?
                 validPosition=0;
-                for packageIndex=find(timerGetActiveStatus());
+                for packageIndex=find(timerGetActiveStatus())
                     if state.cycle. ...
                             ([state.timer.packageList{packageIndex} ...
                             'OnList'])(state.cycle.currentCyclePosition)

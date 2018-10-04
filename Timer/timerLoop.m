@@ -16,18 +16,15 @@ function timerLoop
 
 		setStatusString('Starting loop...');
 
+        state.timer.multipleAbortAttemps=0;
 		state.internal.firstTimeThroughLoop=1;
 		set(gh.timerMainControls.loop, 'String', 'ABORT');
+		set(gh.timerMainControls.doOne, 'String', 'ABORT');
 		hideGUI('gh.timerMainControls.doOne');
         timerMainLoop
-
     else
-		timerCallPackageFunctions('Abort');
-		if ~any(state.timer.packageStatus)	% nothing running
-			set(gh.timerMainControls.loop, 'String', 'LOOP');
-			set([gh.timerMainControls.doOne gh.timerMainControls.loop], 'Visible', 'on');
-		end			
-	end
+        timerDoOne
+    end
 
 
 

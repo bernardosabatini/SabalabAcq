@@ -14,8 +14,14 @@ function makePulsePattern(number, update, rate)
 		catch
 			rate=10000;
 		end
-	end
+    end
 
+    pulseString=tmMakePulsePatternString(number);
+    if ~isfield(state.pulses, 'pulseStrings') || ~iscell(state.pulses.pulseStrings)
+        state.pulses.pulseStrings={};
+    end
+    state.pulses.pulseStrings{number}=pulseString;
+    
 	corners=state.pulses.numPulsesList(number)*max(state.pulses.patternRepeatsList(number),1);
 	displayVectorX=zeros(1, corners);
 	displayVectorY=zeros(1, corners);
@@ -110,9 +116,14 @@ function makePulsePattern(number, update, rate)
         end	
     end
     	
-    if isempty(state.pulses.addCompList{number});
+    if isempty(state.pulses.addCompList{number})
         state.pulses.addCompList{number}='';
-    end;
+    end
+    
+    if ~ischar(state.pulses.addCompList{number})
+        state.pulses.addCompList{number}='';
+    end
+    
     for counter=str2num(state.pulses.addCompList{number})
         if counter
             makePulsePattern(counter, update);
@@ -124,19 +135,15 @@ function makePulsePattern(number, update, rate)
     eval(['state.pulses.pulsePattern' num2str(number) '= data;']);
    
     if ~state.initializing
-        if any(number==[state.cycle.da0List(state.cycle.currentCyclePosition)...
-                        state.cycle.da1List(state.cycle.currentCyclePosition)])
+        if any(number==state.phys.internal.pulsesToUse) || any(number==state.phys.internal.auxPulsesToUse)
             state.phys.internal.needNewOutputData=1;
-        end        
-        if any(number==[state.cycle.aux4List(state.cycle.currentCyclePosition) ...
-                        state.cycle.aux5List(state.cycle.currentCyclePosition) ...
-                        state.cycle.aux6List(state.cycle.currentCyclePosition) ...
-                        state.cycle.aux7List(state.cycle.currentCyclePosition)])
-            state.phys.internal.needNewAuxOutputData=1;
         end
+        if (number==state.cycle.VCRCPulse) || (number==state.cycle.CCRCPulse)
+            state.phys.internal.needNewOutputData=1;
+        end
+        
     else
         state.phys.internal.needNewOutputData=1;
-        state.phys.internal.needNewAuxOutputData=1;
 	end
     
 	if ~any(displayVectorX==0)

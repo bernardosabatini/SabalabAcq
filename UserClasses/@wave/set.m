@@ -3,5 +3,5 @@ function set(wv, varargin)
 % Must be used as wave=set(wave, param, val) to change the wave.
 % Easier to use wave.param=val.
 % useful in functional form.
-setwave(inputname(1),varargin{:});
+setWave(inputname(1),varargin{:});
 

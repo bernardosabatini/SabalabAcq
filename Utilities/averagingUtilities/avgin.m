@@ -1,11 +1,19 @@
-function avgin(newData, avgName)
+function avgin(newData, avgName, verbose)
+    if nargin<3
+        verbose=1;
+    end
+    
 	n=avgNComponents(avgName);
 	if ischar(newData)
 		dataName=newData;
 	else
 		dataName=inputname(1);
-	end
-disp([newData ' added to ' avgName])
+    end
+    
+    if verbose
+        disp(['    ' newData ' added to ' avgName])
+    end
+    
 	if n<=0
 		duplicateo(dataName, avgName);
 		setWaveUserDataField(avgName, 'nComponents', 1);

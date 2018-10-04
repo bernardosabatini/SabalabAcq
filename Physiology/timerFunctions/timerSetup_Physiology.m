@@ -5,6 +5,7 @@ function timerSetup_Physiology
 	
 	updateMinInCell;
 
+    phTelegraphs_read
     phSession_buildOutput;
     phSession_makeOutput;
     phSession_setNumberOfInputScans;

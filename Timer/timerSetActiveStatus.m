@@ -8,7 +8,7 @@ function timerSetActiveStatus(packageList, status, noInitCall)
 	end
 	if nargin<1
 		error('timerSetActiveStatus: please provide package name');
-	end;
+    end
 
 	if isempty(packageList)
 		return

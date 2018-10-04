@@ -5,7 +5,7 @@ function timerInitGUI_Physiology
 	gh.physSettings=guihandles(physSettings);
 	gh.scope=guihandles(scope);
 	
-	initGUIs('physiology.ini');
+	openini('physiology.ini');
 	
 
 	

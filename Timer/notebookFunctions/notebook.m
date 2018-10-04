@@ -3,7 +3,7 @@ function varargout = notebook(varargin)
 %    FIG = NOTEBOOK launch notebook GUI.
 %    NOTEBOOK('callback_name', ...) invoke the named callback.
 
-% Last Modified by GUIDE v2.0 04-Sep-2002 13:19:26
+% Last Modified by GUIDE v2.5 30-Mar-2018 08:30:00
 
 if nargin == 0  % LAUNCH GUI
 
@@ -92,13 +92,7 @@ function varargout = edit_Callback(h, eventdata, handles, varargin)
 		saveNotebooks(state.notebook.notebookNumber);
 	end
 		
-		
-% --------------------------------------------------------------------
-function varargout = jotNote_Callback(h, eventdata, handles, varargin)
-	global gh
-	seeGUI('gh.notebookLine.figure1');
-	pause(0.01);
-	setfocus(gh.notebookLine.newEntry);
+
 	 
 % --------------------------------------------------------------------
 function varargout = lineSlider_Callback(h, eventdata, handles, varargin)
@@ -125,3 +119,22 @@ function varargout = clearButton_Callback(h, eventdata, handles, varargin)
 		saveNotebooks(state.notebook.notebookNumber);
 	end
 	
+
+function newEntry_Callback(hObject, eventdata, handles)
+% hObject    handle to newEntry (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of newEntry as text
+%        str2double(get(hObject,'String')) returns contents of newEntry as a double
+	global state gh
+    genericCallback(hObject);
+
+	addEntryToNotebook(1, ...
+		[datestr(clock,13) ', Epoch ' num2str(state.epoch) ', Acq ' num2str(state.files.lastAcquisition) ' : ' state.notebook.newEntry]);
+	
+	state.notebook.newEntry='';
+	updateGuiByGlobal('state.notebook.newEntry');
+    
+    
+    

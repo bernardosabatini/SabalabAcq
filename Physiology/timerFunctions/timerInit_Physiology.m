@@ -10,6 +10,9 @@ function timerInit_Physiology
 	
 	waitbar(.2,h);
 	
+    state.cycle.isCommonToAllPositions = ... 
+        [state.cycle.isCommonToAllPositions ...
+        'VCRCPulse' 'CCRCPulse' 'autoAnalyzeCC'];
 	waveo('physAcqTrace', nan(1, 1000));
 	waveo('physAcqTime0', nan(1, 1000));
 	waveo('physAcqTime1', nan(1, 1000));	
@@ -28,7 +31,11 @@ function timerInit_Physiology
 
     state.internal.guiOrderPhysiology=...
         {'physiologyOn', 'VCRCPulse', 'CCRCPulse', 'recordingDuration', ...
-        'da0', 'da1', 'aux4', 'aux5', 'aux6', 'aux7'};
+        'ao0', 'ao1', 'ao2', 'ao3', ...
+        'do0', 'do1', 'do2', 'do3', ...
+        'aux0', 'aux1', 'aux2', 'aux3', ...
+        'aux4', 'aux5', 'aux6', 'aux7', ...
+        };
 
     
 	% initialize scope
@@ -41,6 +48,10 @@ function timerInit_Physiology
 	state.phys.cellParams.breakInClock1=clock;	
 	state.phys.internal.channelGains=ones(1,32);
 
+    global phAnalysis
+    evalin('base', 'global phAnalysis');
+    phAnalysis=[];
+    
     global scopeInput0 scopeInputFit0 scopeInput1 scopeInputFit1
 	
 	plot(scopeInput0);
@@ -82,11 +93,11 @@ function timerInit_Physiology
 	state.cycle.physiologyOn=1;
 	updateGuiByGlobal('state.cycle.physiologyOn');
 	state.cycle.physiologyOnList(1)=1;
-	
+    
  	if state.hasDevices
         phSession_buildInput;
-        phSession_buildOutput;
-   else
+        phSession_buildOutput(2);
+    else
 		set(gh.physControls.startButton, 'Enable', 'off')
  		set(get(gh.scope.figure1, 'Children'), 'Enable', 'off');
  		phScope_hide;

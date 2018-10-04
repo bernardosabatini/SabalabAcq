@@ -1,15 +1,15 @@
+% Startup.m is automatically called by MATLAB when the program is launched
+% here we look for 
 
 waveUserDefaults('axisAutoScale', 2);
 global state gh
-state.hasDevices=0;
+state.hasDevices=0; 
 
-%%% TN 06 Apr 05
+% warning('off', 'MATLAB:dispatcher:InexactMatch');
+% warning('off', 'daq:daqmex:propertyConfigurationError');
+% warning('off', 'MATLAB:dispatcher:InexactCaseMatch');
 
-warning('off', 'MATLAB:dispatcher:InexactMatch');
-warning('off', 'daq:daqmex:propertyConfigurationError');
-warning('off', 'MATLAB:dispatcher:InexactCaseMatch');
-
-state.devices=daq.getDevices;
+state.devices=daq.getDevices; 
 
 if isempty(state.devices)
     disp('*** NO DEVICES FOUND.  STARTING UP IN ANALYSIS MODE ***');

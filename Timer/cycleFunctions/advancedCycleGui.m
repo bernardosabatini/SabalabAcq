@@ -99,10 +99,13 @@ function redefineCycle_Callback(h, eventdata, handles)
         end
 	
         state.cycle.callingTag=tag;
-		if isnumeric(getfield(state.cycle, tag))
-			eval(['state.cycle.' tag 'List(state.cycle.displayCyclePosition)=state.cycle.' tag ';']);
-		else
-			eval(['state.cycle.' tag 'List{state.cycle.displayCyclePosition}=state.cycle.' tag ';']);
+        isCommon=any(cellfun(@(x) strcmp(tag, x), state.cycle.isCommonToAllPositions));
+		if ~isCommon
+            if isnumeric(getfield(state.cycle, tag))
+                eval(['state.cycle.' tag 'List(state.cycle.displayCyclePosition)=state.cycle.' tag ';']);
+            else
+                eval(['state.cycle.' tag 'List{state.cycle.displayCyclePosition}=state.cycle.' tag ';']);
+            end
         end
         
         if ~isempty(callingPackage)
@@ -131,10 +134,15 @@ function redefineCycle_Callback(h, eventdata, handles)
     if ~isempty(callingPackage)
         timerCallPackageFunctions('CycleChanged', callingPackage, 1);
     end
+    
     if state.cycle.displayCyclePosition==state.cycle.currentCyclePosition 
-        timerCycle_applyPosition;
+        if state.cycle.holdDAQUpdates
+            setStatusString('UPDATES HELD');
+        else
+            timerCycle_applyPosition;
+        end
     end
-
+    
 % --- Executes on button press in writeProtect.
 function writeProtect_Callback(hObject, eventdata, handles)
 	genericCallback(hObject);

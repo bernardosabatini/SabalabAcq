@@ -6,9 +6,7 @@ function addEntryToNotebook(notebookNumber, entry, update)
 	
 	if nargin<3
 		update=1;
-	end
-	
-    
+    end
     
 	eval(['state.notebook.notebookText' num2str(notebookNumber) ...
 			'{end+1}=entry;']);

@@ -7,9 +7,11 @@ function timerCycle_setDisplayPosition(position)
 	else
 		if position>length(state.cycle.delayList)
 			position=length(state.cycle.delayList)+1;
+            createPosition=1;
 		end
 		state.cycle.displayCyclePosition=position;
 		updateGuiByGlobal('state.cycle.displayCyclePosition');
+
     end
 	
     fields=fieldnames(state.cycle);
@@ -18,20 +20,24 @@ function timerCycle_setDisplayPosition(position)
         if length(fieldList)>4 && strcmp('List', fieldList(end-3:end))
             field=fieldList(1:end-4);
             if position>length(state.cycle.(fieldList))
+                createPosition=1;
+
                 if ~isfield(state.cycle, field) || isnumeric(state.cycle.(field))
-                    minValue=[];
-                    guiName=getGuiOfGlobal(['state.cycle.' field]);
-                    if ~isempty(guiName)
-                        guiHandle=eval(guiName{1});
-                        minValue=getUserDataField(guiHandle, 'Min');
-                    end
-                    if isempty(minValue)
-                        minValue=0;
-                    end
-                    state.cycle.(field)=minValue;
+%                     minValue=[];
+%                     guiName=getGuiOfGlobal(['state.cycle.' field]);
+%                     if ~isempty(guiName)
+%                         guiHandle=eval(guiName{1});
+%                         minValue=getUserDataField(guiHandle, 'Min');
+%                     end
+%                     if isempty(minValue)
+%                         minValue=0;
+%                     end
+%                     state.cycle.(field)=minValue;
+                    state.cycle.(field)=state.cycle.(fieldList)(end);
                     state.cycle.(fieldList)(position)=state.cycle.(field);
                 elseif ischar(state.cycle.(field))
-                    state.cycle.(field)='';
+%                     state.cycle.(field)='';
+                    state.cycle.(field)=state.cycle.(fieldList){end};
                     state.cycle.(fieldList){position}=state.cycle.(field);
 %                 elseif iscell(state.cycle.(field))
 %                     state.cycle.(field)={''};
@@ -51,4 +57,13 @@ function timerCycle_setDisplayPosition(position)
             updateGuiByGlobal(['state.cycle.' field]);
         end
     end
+    
+    if createPosition
+        disp('*** New cycle position created and autofilled');
+        setStatusString('NEW POSITION')
+    else
+        setStatusString('')
+    end
+    
+    
     

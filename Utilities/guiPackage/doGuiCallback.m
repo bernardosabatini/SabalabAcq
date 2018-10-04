@@ -9,7 +9,7 @@ function doGUICallback(handle)
 				disp(['doGUICallBack: ' lasterr ' in ' funcName ]);
 			end
 		else
-			if length(funcName)>0
+			if ~isempty(funcName)
 				disp(['doGUICallback: Callback function (' funcName ') does not exist. No action.']);
 			end
 		end

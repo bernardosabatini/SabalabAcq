@@ -1,7 +1,7 @@
 function timerCycleChanged_Physiology
 	global gh state
 %	disp(['timerCycleChanged_Physiology: the calling gui was ' state.cycle.callingTag]);
-    
+
     if strcmp(state.cycle.callingTag, 'inputTracksOutput')
         if state.cycle.inputTracksOutput
             set(...

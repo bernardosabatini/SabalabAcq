@@ -1,4 +1,4 @@
-function [out,fname,pname,ext]=initGUIs(fileName, callCallbacks, file)
+ function [out,fname,pname,ext]=initGUIs(fileName, callCallbacks, file)
 % opens and interprets and initialization file 
 % 
 

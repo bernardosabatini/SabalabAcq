@@ -37,6 +37,7 @@ function phScope_process(data)
             end
         end
 
+        state.phys.scope.RIn=round(100*state.phys.scope.RIn)/100;
     
         if state.phys.scope.calcSeries && ...
                 ~state.phys.scope.CCUsed(counter) && ...
@@ -46,7 +47,9 @@ function phScope_process(data)
             else
                 [peak, peakloc]=min(chanData);
             end
-
+            
+            calcError=0;
+            
             switch state.phys.scope.calcSeriesMethod
                 case 1
                     % Existing Code
@@ -54,9 +57,17 @@ function phScope_process(data)
                     peak1=peak-endline;
                     peak2=chanData(delta+peakloc)-endline;
                     peak3=chanData(2*delta+peakloc)-endline;
-                    peakloc=peakloc-state.phys.scope.pointsUntilPulse(counter)+1;
-                    tau=delta*(1/log(peak1/peak2)+1/log(peak2/peak3)+2/log(peak1/peak3))/3;
-                    amp=(peak1*exp(peakloc/tau)+peak2*exp((peakloc+delta)/tau)+peak3*exp((peakloc+2*delta)/tau))/3;
+                    if (peak1-peak2)*(peak3-peak2)>0
+                        peakloc=peakloc-state.phys.scope.pointsUntilPulse(counter)+1;
+                        tau=delta*(1/log(peak1/peak2)+1/log(peak2/peak3)+2/log(peak1/peak3))/3;
+                        amp=(peak1*exp(peakloc/tau)+peak2*exp((peakloc+delta)/tau)+peak3*exp((peakloc+2*delta)/tau))/3;
+                    else
+                        disp('phScope_process: current is not monotonic.  Series calculation skipped preformed')
+                        calcError=1;
+                        amp=nan;
+                        tau=nan;
+                        peakloc=nan;
+                    end
 
                 case 2
                     %Matlab polyfit to get tau & amp
@@ -72,9 +83,15 @@ function phScope_process(data)
 
             end
 
-            state.phys.scope.Rs=round(10*1000*state.phys.scope.ampsUsed(counter)/amp)/10;
-            state.phys.scope.RIn=round(10*(state.phys.scope.RIn-state.phys.scope.Rs))/10;
-            state.phys.scope.Cm=round(10*1000*1000*tau/state.phys.scope.rate/state.phys.scope.Rs)/10;
+            if calcError
+                state.phys.scope.Rs=nan;
+                state.phys.scope.RIn=nan;
+                state.phys.scope.Cm=nan;
+            else                
+                state.phys.scope.Rs=round(10*1000*state.phys.scope.ampsUsed(counter)/amp)/10;
+                state.phys.scope.RIn=round(10*(state.phys.scope.RIn-state.phys.scope.Rs))/10;
+                state.phys.scope.Cm=round(10*1000*1000*tau/state.phys.scope.rate/state.phys.scope.Rs)/10;
+            end
 
             updateGuiByGlobal('state.phys.scope.RIn');
             updateGuiByGlobal('state.phys.scope.Rs');	
@@ -88,8 +105,13 @@ function phScope_process(data)
             updateGuiByGlobal(['state.phys.cellParams.rs' channelString]);	
             updateGuiByGlobal(['state.phys.cellParams.cm' channelString]);	
 
-            setWave(['scopeInputFit' channelString], ...
-                'data', amp*exp(-[0:2*state.phys.scope.pointsUntilPulse(counter)-1]/tau)+endline);
+            if calcError
+                 setWave(['scopeInputFit' channelString], ...
+                    'data', nan(1,10));
+            else
+                setWave(['scopeInputFit' channelString], ...
+                    'data', real(amp*exp(-[0:2*state.phys.scope.pointsUntilPulse(counter)-1]/tau)+endline));
+            end
 
             state.phys.scope.RsAvg= round(10*...
                 (state.phys.scope.RsAvg*state.phys.scope.counter+state.phys.scope.Rs)/(state.phys.scope.counter+1))/10;

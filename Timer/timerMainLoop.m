@@ -17,11 +17,11 @@ function timerMainLoop
             recoveredFromPause=1;
         end
 
-        if needToGetOut
+        if needToGetOut()
             return
         end	
 
-        nextPosition=findValidCyclePosition;
+        nextPosition=findValidCyclePosition();
         
         if nextPosition==-1 % flag set to indicate that the cycle has ended and the user does not want to restart if
             state.timer.abort=1;
@@ -34,7 +34,7 @@ function timerMainLoop
         
         timerCycle_applyPosition;
 
-        if needToGetOut
+        if needToGetOut()
             return
         end	
 
@@ -69,7 +69,7 @@ function timerMainLoop
             end
 
             while etime(clock,state.internal.triggerTime) <(state.internal.lastTimeDelay-1)
-                if needToGetOut
+                if needToGetOut()
                     return
                 end	
 
@@ -85,7 +85,7 @@ function timerMainLoop
 
                 while floor(etime(clock,state.internal.triggerTime))<old
                     pause(0.01);
-                    if needToGetOut
+                    if needToGetOut()
                         return
                     end
                 end
@@ -94,7 +94,7 @@ function timerMainLoop
                 pause(0.01);
             end
 
-            if needToGetOut
+            if needToGetOut()
                 return
             end
             state.internal.secondsCounter=0;
@@ -111,7 +111,7 @@ function timerMainLoop
                 timerSession_resolveTriggers;
 %                gotoCycleStagePosition(state.internal.firstTimeThroughLoop);
             end
-            if needToGetOut
+            if needToGetOut()
                 return
             end	
             timerCallPackageFunctions('Start');
@@ -148,7 +148,7 @@ function timerMainLoop
 	
 	
 	
-function out=needToGetOut
+function out=needToGetOut()
     global state
     out=0;
     if state.timer.abort

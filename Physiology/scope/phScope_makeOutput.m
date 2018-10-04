@@ -48,8 +48,6 @@ function phScope_makeOutput
         state.phys.scope.output(state.phys.scope.pointsUntilPulse(counter)...
             : 3*state.phys.scope.pointsUntilPulse(counter), counter) = amp;
     end
-    
- 
-    
+
 
 	

@@ -1,4 +1,4 @@
-function phScope_StartButtonPressed
+function phScope_startButtonPressed
 %phScope_StartButtonPressed Handles the request to start or stop the scope
 	
     global state gh

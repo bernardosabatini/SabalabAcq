@@ -22,11 +22,13 @@ function timerAbort_Physiology
 
     if physInputSession.IsRunning
     	setPhysStatusString('waiting for input');
+        disp(' WARNING: If does not progress from this state, ^C and phSession_hardKill');
         physInputSession.wait();
     end
     
     if physOutputSession.IsRunning
     	setPhysStatusString('waiting for output');
+        disp(' WARNING: If does not progress from this state, ^C and phSession_hardKill');
         physOutputSession.wait();        
     end
     

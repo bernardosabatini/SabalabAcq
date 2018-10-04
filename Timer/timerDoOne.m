@@ -4,13 +4,7 @@ function timerDoOne
 	state.cycle.cycleStatus=0;
 
 	val=get(gh.timerMainControls.doOne, 'String');
-
-	persistent multipleAbortAttempts
-	
-	if (exist('multipleAbortAttempts', 'var')~=1)
-		multipleAbortAttempts=0;
-	end
-	
+  
 	if strcmp(val, 'DO ONE')
 		if timerPausedStatus
 			beep;
@@ -20,8 +14,9 @@ function timerDoOne
 
 		if ~savingInfoIsOK
 			return
-		end	
-
+        end	
+        state.timer.multipleAbortAttemps=0;
+        
         state.internal.firstTimeThroughLoop=1;
         multipleAbortAttempts=0;
 		state.cycle.loopingStatus=0; 	% not a loop
@@ -42,14 +37,15 @@ function timerDoOne
 		timerCallPackageFunctions('SessionWait');		
 
 	elseif strcmp(val, 'ABORT')
-		timerCallPackageFunctions('Abort');
-		multipleAbortAttempts=multipleAbortAttempts+1;
-		if multipleAbortAttempts>1
-			multipleAbortAttempts=multipleAbortAttempts+1;
+		state.timer.multipleAbortAttemps=state.timer.multipleAbortAttemps+1;
+		if state.timer.multipleAbortAttemps>1
 			disp('Multiple abort attempts.  Will force abort.');
-			timerCallPackageFunctions('ForcedAbort');
-		end		
-	else
+			timerCallPackageFunctions('ForceAbort');
+    		timerCallPackageFunctions('Abort');
+        else
+        		timerCallPackageFunctions('Abort');
+        end
+    else
 		disp('timerDoOne: Do One button is in unknown state'); 	% BSMOD - error checking
 	end
 	

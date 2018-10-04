@@ -65,6 +65,7 @@ function timerExecuteAllPackagesDone
 
     state.internal.lastTimeDelay=state.cycle.nextTimeDelay;
     setStatusString('Complete')
+
     if state.cycle.loopingStatus==0		% not a loop, just a single 
         global gh
         set(gh.timerMainControls.doOne, 'String', 'DO ONE');

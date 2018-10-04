@@ -3,7 +3,9 @@ function [rin, rs, cm, error]=calcRs(data, dx, pulseAmp, pulseStart, pulseLength
 		rs=0;
 		cm=0;
 		error=0;
-		
+
+        waveo('calcRsFit', nan(1,10) , 'xscale', [pulseStart dx]);
+
 		dataPulseStart = 1+round(pulseStart/dx);
 		dataPulseEnd = 1+round((pulseStart+pulseLength)/dx);
 		
@@ -53,6 +55,12 @@ function [rin, rs, cm, error]=calcRs(data, dx, pulseAmp, pulseStart, pulseLength
 		peak3=data(2*delta+peakloc)-endline;
 		peakloc=peakloc-round(pulseStart/dx)-1;
 		
+        if (peak1-peak2)*(peak2-peak3)<0
+ 			disp('calcRs: 3 points are non-monotonic.  No fit possible')
+            error=1;
+            return
+        end
+        
 		tau=delta*(1/log(peak1/peak2)+1/log(peak2/peak3)+2/log(peak1/peak3))/3;
 		amp=(peak1/exp(-peakloc/tau)+peak2/exp(-(peakloc+delta)/tau)+peak3/exp(-(peakloc+2*delta)/tau))/3;
 		

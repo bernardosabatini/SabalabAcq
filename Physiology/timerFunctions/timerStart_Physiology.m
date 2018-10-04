@@ -58,7 +58,7 @@ function timerStart_Physiology
         if physOutputSession.ScansQueued>0
             error('timerStartPhysiology: Flush failed');
         end
-
+        
         physOutputSession.queueOutputData(physOutputData);
         physOutputSession.startBackground();
     end

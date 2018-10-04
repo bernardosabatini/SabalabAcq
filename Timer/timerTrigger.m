@@ -27,6 +27,7 @@ function timerTrigger(freshTriggerTime)
 	state.files.lastAcquisition=state.files.fileCounter;
 	state.cycle.lastPositionUsed=state.cycle.currentCyclePosition;
 	
+    state.internal.epochsUsed(state.epoch)=1;
     timerCallPackageFunctions('Trigger', state.timer.triggerPackage);
 	
 	setStatusString('Triggered')

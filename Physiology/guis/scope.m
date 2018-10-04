@@ -74,6 +74,7 @@ function varargout = generic_Callback(h, eventdata, handles, varargin)
 function varargout = fit_Callback(h, eventdata, handles, varargin)
 	genericCallback(h);
     global state
+
     if ~state.phys.scope.calcSeries 
         setWave('scopeInputFit0', 'data', []);
         setWave('scopeInputFit1', 'data', []);

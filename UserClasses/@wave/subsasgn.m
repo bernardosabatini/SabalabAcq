@@ -3,7 +3,7 @@ function wv =  subsasgn(wv,s,val)
 % This function allows you to index using structure(.), array (), or cell array {} indexing.
 %
 needUpdate=0;
-wavename=inputname(1);
+%wavename=inputname(1);
 switch s(1).type
     case '.'	% Referennce fields like a structure
         switch s(1).subs

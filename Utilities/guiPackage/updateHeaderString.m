@@ -9,35 +9,38 @@ function updateHeaderString(globalName)
 	pos=findstr(state.headerString, [globalName '=']);
 	
 	val=eval(globalName);
-	if ~isnumeric(val) & ~ischar(val)
+	if iscell(val)
+        % here we will assume that cell arrays are only cells of strings
+        outString='';
+        for cc=1:length(val)
+            if ischar(val{cc})
+                outString=[outString '''' val{cc} ''' '];
+            else
+                outString=[outString ''''  ''' '];
+            end
+        end
+        val=['{' outString '}'];
+    elseif ~isnumeric(val) && ~ischar(val)
 		val
 		disp(['updateHeaderString: unknown type for ' globalName]);
 		val='0';
 	elseif isnumeric(val)
-% 		if length(val)~=1
-% 			val=0;
-% 		end
-%         val=num2str(val);
         if length(val) ~=1
-            sval='';                                        %Fitz MOD
-            for i=1:length(val)
-                sval=[sval strtrim(num2str(val(i))) ','];
-            end
-            val=sval;
-        else                                                %Fitz MOD
+            val=['[' num2str(val) ']'];
+        else                                              
             val=num2str(val);
         end
 	else
 		val=['''' val ''''];
 	end
 
-	if length(pos)==0
+	if isempty(pos)
 		state.headerString=[state.headerString globalName '=' val 13];
 	else
-		cr=findstr(state.headerString, 13);
+		cr=strfind(state.headerString, 13);
 		index=find(cr>pos);
 		next=cr(index(1));
-		if length(next)==0
+		if isempty(next)
 			state.headerString=[state.headerString(1:pos-1) globalName '=' val 13];
 		else
 			state.headerString=[state.headerString(1:pos-1) globalName '=' val state.headerString(next:end)];

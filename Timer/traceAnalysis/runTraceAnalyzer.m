@@ -7,7 +7,7 @@ function runTraceAnalyzer(phys)
 		baseLR=[];
 		% check if we just did a pulse that should be analyzed or are we
 		% analyzing all pulses (==0)
-		if state.analysis.setup{lineCounter, 2}==state.cycle.lastPulseUsed0 | state.analysis.setup{lineCounter, 2}==0
+		if state.analysis.setup{lineCounter, 2}==state.phys.internal.pulseUsed0 | state.analysis.setup{lineCounter, 2}==0
 			if state.analysis.setup{lineCounter, 1} < 10  & phys
 				% Check the channel selector.  This is a physiology trace
 				% and phys is on

@@ -22,7 +22,7 @@ function varargout = timerMainControls(varargin)
 
 % Edit the above text to modify the response to help timerMainControls
 
-% Last Modified by GUIDE v2.5 02-Nov-2009 15:11:44
+% Last Modified by GUIDE v2.5 30-Mar-2018 08:29:01
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -131,7 +131,11 @@ function epoch_Callback(hObject, eventdata, handles)
     	addEntryToNotebook(1, [datestr(hitclock,0) ': Changed epoch to ' num2str(state.epoch) ' - ' str]);
     	addEntryToNotebook(2, [datestr(hitclock,0) ': Changed epoch to ' num2str(state.epoch) ' - ' str]);
     end
-
+    if length(state.internal.epochsUsed)<state.epoch
+        state.internal.epochsUsed(end+1:state.epoch)=0;
+    end
+    timerCallPackageFunctions('ChangedEpoch');
+    
 
 
 % --------------------------------------------------------------------
@@ -150,3 +154,13 @@ function user_CreateFcn(hObject, eventdata, handles)
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end
+
+
+% --- Executes on key press with focus on figure1 and none of its controls.
+function figure1_KeyPressFcn(hObject, eventdata, handles)
+% hObject    handle to figure1 (see GCBO)
+% eventdata  structure with the following fields (see MATLAB.UI.FIGURE)
+%	Key: name of the key that was pressed, in lower case
+%	Character: character interpretation of the key(s) that was pressed
+%	Modifier: name(s) of the modifier key(s) (i.e., control, shift) pressed
+% handles    structure with handles and user data (see GUIDATA)
