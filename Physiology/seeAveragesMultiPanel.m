@@ -5,7 +5,7 @@ function seeAveragesMultiPanel(pulses, channels)
 		if state.cycle.useCyclePos
 			pulses=find(state.cycle.physiologyOnList);
 		else
-			pulses=unique(state.cycle.da0List);
+			pulses=unique(state.cycle.ao0List);
 		end
 		
 	end

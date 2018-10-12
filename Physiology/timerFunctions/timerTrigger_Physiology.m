@@ -4,6 +4,6 @@ function timerTrigger_Physiology
     if ~state.phys.internal.triggerSetToMaster
         error('timerTrigger_Physiology: called on to trigger, but we are not the master');
     else
-        global physInputSession physOutputSession
-        physInputSession.startBackground();
+        global physInputSession 
+        physInputSession.startBackground;
     end

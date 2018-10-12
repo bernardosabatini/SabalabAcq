@@ -38,7 +38,7 @@ function  timerApplyCyclePosition_Physiology
 
     haveControlOfAuxBoard=1;
     if timerGetActiveStatus('Imaging')
-        if state.cycle.imageOnList(state.cycle.currentCyclePosition)
+        if state.cycle.imagingOnList(state.cycle.currentCyclePosition)
             haveControlOfAuxBoard=0;
         end
     end    

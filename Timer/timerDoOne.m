@@ -31,7 +31,6 @@ function timerDoOne
 		set(gh.timerMainControls.doOne, 'String', 'ABORT');
 		hideGUI('gh.timerMainControls.loop');
 		state.timer.abort=0;
-		timerCallPackageFunctions('ReadyForTrigger');	
         state.internal.firstTimeThroughLoop=0;
 		timerTrigger;
 		timerCallPackageFunctions('SessionWait');		

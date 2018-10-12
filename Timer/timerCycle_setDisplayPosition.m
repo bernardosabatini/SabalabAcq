@@ -1,5 +1,5 @@
 function timerCycle_setDisplayPosition(position)
-	global state gh
+	global state
 
 	createPosition=0;
 	if nargin<1
@@ -11,7 +11,6 @@ function timerCycle_setDisplayPosition(position)
 		end
 		state.cycle.displayCyclePosition=position;
 		updateGuiByGlobal('state.cycle.displayCyclePosition');
-
     end
 	
     fields=fieldnames(state.cycle);
@@ -21,27 +20,12 @@ function timerCycle_setDisplayPosition(position)
             field=fieldList(1:end-4);
             if position>length(state.cycle.(fieldList))
                 createPosition=1;
-
                 if ~isfield(state.cycle, field) || isnumeric(state.cycle.(field))
-%                     minValue=[];
-%                     guiName=getGuiOfGlobal(['state.cycle.' field]);
-%                     if ~isempty(guiName)
-%                         guiHandle=eval(guiName{1});
-%                         minValue=getUserDataField(guiHandle, 'Min');
-%                     end
-%                     if isempty(minValue)
-%                         minValue=0;
-%                     end
-%                     state.cycle.(field)=minValue;
                     state.cycle.(field)=state.cycle.(fieldList)(end);
                     state.cycle.(fieldList)(position)=state.cycle.(field);
                 elseif ischar(state.cycle.(field))
-%                     state.cycle.(field)='';
                     state.cycle.(field)=state.cycle.(fieldList){end};
                     state.cycle.(fieldList){position}=state.cycle.(field);
-%                 elseif iscell(state.cycle.(field))
-%                     state.cycle.(field)={''};
-%                     state.cycle.(fieldList)(position)=state.cycle.(field);
                 else
                     disp(['state.cycle.' field ' is not numeric or char']);
                 end

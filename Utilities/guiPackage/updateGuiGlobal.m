@@ -1,4 +1,4 @@
-function updateGUIGlobal(handle)
+function updateGuiGlobal(handle)
 % update the value of a Global value to match that contained in its GUI
 	if hasUserDataField(handle, 'Global')
 		gName=getUserDataField(handle, 'Global');
@@ -7,12 +7,13 @@ function updateGUIGlobal(handle)
 		val=getGuiValue(handle);
 		if isnumeric(val)
 			val=num2str(val);
-		else
+        else
+            val=strrep(val, '''', '');
 			val=['''' val ''''];
 		end
 		eval(['global ' topName]);
 		if exist(topName, 'var')
-			if length(structName)>0
+			if ~isempty(structName)
 				eval([structName '=setfield(' structName ',''' fieldName ''',' val ');']);	
 			else
 				eval([topName '=' val ';']);

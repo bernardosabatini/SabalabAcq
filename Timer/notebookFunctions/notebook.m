@@ -3,7 +3,7 @@ function varargout = notebook(varargin)
 %    FIG = NOTEBOOK launch notebook GUI.
 %    NOTEBOOK('callback_name', ...) invoke the named callback.
 
-% Last Modified by GUIDE v2.5 30-Mar-2018 08:30:00
+% Last Modified by GUIDE v2.5 11-Oct-2018 16:54:57
 
 if nargin == 0  % LAUNCH GUI
 
@@ -130,11 +130,10 @@ function newEntry_Callback(hObject, eventdata, handles)
 	global state gh
     genericCallback(hObject);
 
+    state.notebook.newEntry=strrep(state.notebook.newEntry, '''', '');
 	addEntryToNotebook(1, ...
 		[datestr(clock,13) ', Epoch ' num2str(state.epoch) ', Acq ' num2str(state.files.lastAcquisition) ' : ' state.notebook.newEntry]);
 	
 	state.notebook.newEntry='';
 	updateGuiByGlobal('state.notebook.newEntry');
-    
-    
     

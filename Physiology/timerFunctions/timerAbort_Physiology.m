@@ -41,10 +41,10 @@ function timerAbort_Physiology
 
     if physInputSession.IsContinuous && ...
             state.phys.settings.streamToDisk && state.files.autoSave
-                    try
-                        fclose(state.phys.internal.streamFID);
-                    catch
-                    end
+        try
+            fclose(state.phys.internal.streamFID);
+        catch
+        end
     end
     
     physOutputSession.release();

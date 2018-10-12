@@ -95,6 +95,10 @@ function initTimer(packages)
 	loadUserSettingsPath;
 	loadUserSettings;
 	timerCycle_setDisplayPosition(1);
+    if ~isempty(state.timer.analysisFunctionPath) && ...
+            ischar(state.timer.analysisFunctionPath)
+    	timerMakeAnalysisFunctionMenu;
+    end
 	
 	if ~state.hasDevices
 		set(gh.timerMainControls.loop, 'Enable', 'off');

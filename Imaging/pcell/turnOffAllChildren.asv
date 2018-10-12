@@ -1,5 +1,0 @@
-12
-function turnOffAllChildren(h)
-	c=get(h, 'Children'); % c=allchild(h);
-	
-	set(c, 'enable', 'off');

@@ -83,7 +83,11 @@ function varargout = changeGains_Callback(h, eventdata, handles, varargin)
 % --------------------------------------------------------------------
 function varargout = changeAcqChannel_Callback(h, eventdata, handles, varargin)
 	genericCallback(h);
-	phSession_buildInput;
+
+    phSession_buildInput;
+    pause(0.01);
+    timerAbort_Physiology;
+
 
 % --------------------------------------------------------------------
 function varargout = changeChannel0_Callback(h, eventdata, handles, varargin)
