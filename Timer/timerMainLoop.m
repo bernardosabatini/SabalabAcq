@@ -22,6 +22,7 @@ function timerMainLoop
         end	
 
         nextPosition=findValidCyclePosition();
+        timerSetCycleActivePackagesStatus;
         
         if nextPosition==-1 % flag set to indicate that the cycle has ended and the user does not want to restart if
             state.timer.abort=1;

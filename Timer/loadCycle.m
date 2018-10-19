@@ -62,6 +62,8 @@ function loadCycle(pname, fname)
         updateGuiByGlobal('state.cycle.currentCyclePosition');
         updateGuiByGlobal('state.cycle.repeatsDone');        
         setupCycleRandomList
+
+        addEntryToNotebook(2, ['LOADED CYCLE ' state.cycle.cycleName]);
         
 		setStatusString('cycle loaded');
 	else

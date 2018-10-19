@@ -15,11 +15,12 @@ function timerDoOne
 		if ~savingInfoIsOK
 			return
         end	
-        state.timer.multipleAbortAttemps=0;
         
+        state.timer.multipleAbortAttemps=0;
         state.internal.firstTimeThroughLoop=1;
         multipleAbortAttempts=0;
 		state.cycle.loopingStatus=0; 	% not a loop
+        timerSetCycleActivePackagesStatus
 		timerCycle_applyPosition;
 %		gotoCycleStagePosition(1);	% force a movement for when they hit DO ONE button
         

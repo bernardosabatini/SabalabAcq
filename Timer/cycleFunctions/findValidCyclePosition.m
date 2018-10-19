@@ -24,7 +24,7 @@ isValid=0;
             valid=1;
         else
             % if there is no function to call, is a package active?
-            for pIndex=find(timerGetActiveStatus())
+            for pIndex=find(state.timer.initializedPackages)
                 if state.cycle. ...
                         ([lower(state.timer.packageList{pIndex}) ...
                         'OnList'])(pos)
@@ -38,7 +38,7 @@ isValid=0;
 %%
 while ~isValid 
     passedEnd=0;
-    
+ %   [state.cycle.currentCyclePosition state.cycle.repeatsDone]
     if state.cycle.randomize % are we randomizing
         if (state.internal.randomPosition > length(state.internal.randomPositionsList)) % are we passed the end
             state.internal.randomPosition=1;

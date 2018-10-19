@@ -84,9 +84,12 @@ function timerInit_Physiology
     state.phys.internal.needNewOutputChannels=1;
     state.phys.internal.needNewOutputData=1;
     
-	phClamp_processSelection;
-	phScope_makeSession;
-	phScope_makeOutput;
+    phClamp_processSelection;
+ 	if state.hasDevices
+        setPhysStatusString('Build Scope');
+        phScope_makeSession;
+        phScope_makeOutput;
+   end
 
     waitbar(.6,h);
 
@@ -95,6 +98,7 @@ function timerInit_Physiology
 	state.cycle.physiologyOnList(1)=1;
     
  	if state.hasDevices
+        setPhysStatusString('Building DAQs');
         phSession_buildInput;
         phSession_buildOutput(2);
     else
@@ -103,5 +107,6 @@ function timerInit_Physiology
  		phScope_hide;
  		set(get(gh.pulseMaker.figure1, 'Children'), 'Enable', 'off');
 	end
+    setPhysStatusString('');
 	waitbar(1,h);
 	close(h);
