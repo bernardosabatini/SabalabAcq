@@ -3,7 +3,7 @@ function varargout = notebook(varargin)
 %    FIG = NOTEBOOK launch notebook GUI.
 %    NOTEBOOK('callback_name', ...) invoke the named callback.
 
-% Last Modified by GUIDE v2.5 11-Oct-2018 16:54:57
+% Last Modified by GUIDE v2.5 19-Oct-2018 14:49:12
 
 if nargin == 0  % LAUNCH GUI
 
@@ -99,7 +99,7 @@ function varargout = lineSlider_Callback(h, eventdata, handles, varargin)
 	genericCallback(h);
 	global state
 	state.notebook.linePosition=1001-state.notebook.linePositionFlip+1;
-	updateNotebookDisplay;
+	updateNotebookDisplay(state.notebook.linePosition);
 
 % --------------------------------------------------------------------
 function varargout = notebookNumber_Callback(h, eventdata, handles, varargin)
@@ -137,3 +137,13 @@ function newEntry_Callback(hObject, eventdata, handles)
 	state.notebook.newEntry='';
 	updateGuiByGlobal('state.notebook.newEntry');
     
+
+
+% --- Executes on key release with focus on figure1 and none of its controls.
+function figure1_KeyReleaseFcn(hObject, eventdata, handles)
+% hObject    handle to figure1 (see GCBO)
+% eventdata  structure with the following fields (see MATLAB.UI.FIGURE)
+%	Key: name of the key that was released, in lower case
+%	Character: character interpretation of the key(s) that was released
+%	Modifier: name(s) of the modifier key(s) (i.e., control, shift) released
+% handles    structure with handles and user data (see GUIDATA)

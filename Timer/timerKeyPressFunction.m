@@ -1,5 +1,5 @@
 function timerKeyPressFunction
-global state gh
+global gh
 
 % genericKeyPressFcn.m*****
 % Function that looks at the last key pressed and executes an appropriate function.
@@ -14,7 +14,7 @@ if length(val) ~= 1
     return
 end
 
-if (val==13) || (val==74) ||(val==106) % J or Ctrl J
+if (val==13) || (val==74) ||(val==106) % J or Ctrl J % Flip to the note entry 
 	setStatusString('Type Note');
     setfocus(gh.notebook.newEntry);
 end
