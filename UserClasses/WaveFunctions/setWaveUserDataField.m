@@ -16,6 +16,11 @@ if ~ischar(field)
     error('getfield: Field name required as input #2');
 end
 
-ud=get(wv, 'UserData');
-ud.(field)=value;
-setWave(wv, 'UserData', ud);
+if ischar(wv)
+    ud=get(wv, 'UserData');
+    ud.(field)=value;
+    setWave(wv, 'UserData', ud);
+else
+    eval(['global ' inputname(1)]);
+    eval([inputname(1) '.UserData.(field)=value;']);
+end

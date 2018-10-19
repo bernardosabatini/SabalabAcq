@@ -5,7 +5,7 @@ function status=timerGetActiveStatus(package)
 	if nargin==1
 		if iscell(package)
 			indexList=find(strcmp(state.timer.packageList, package));
-		elseif isnumeric(package) & ~isempty(package)
+		elseif isnumeric(package) && ~isempty(package)
 			indexList=package;
 		elseif ischar(package)
 			indexList=find(strcmp(state.timer.packageList, package));

@@ -32,7 +32,7 @@ function timerSetActiveStatus(packageList, status, noInitCall)
                     state.timer.packageList(index)...
                     );
                 timerCallPackageFunctions('MergeCycleGui'); % Stack GUI windows
-                timerCallPackageFunctions('InitGUI');  % Opens Phys Controls, scope & LineMonitor GUI window & read ini files
+                timerCallPackageFunctions('InitGUI');  % Opens windows and read ini files
                 if ~noInitCall
                     timerCallPackageFunctions('Init');
                 end

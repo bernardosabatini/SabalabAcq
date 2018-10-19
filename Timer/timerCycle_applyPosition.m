@@ -9,7 +9,12 @@ function timerCycle_applyPosition(position)
 	% is there is a text function call in the cycle
 	% execute it
 	if ~isempty(state.cycle.functionNameList{state.cycle.currentCyclePosition})
-		evalin('base', state.cycle.functionNameList{state.cycle.currentCyclePosition});
+        try
+            evalin('base', state.cycle.functionNameList{state.cycle.currentCyclePosition});
+        catch
+            disp('!!!! timerCycle_applyPosition: Unable to execute cycle position function');
+            disp('       Suppressing error');
+        end
 	end
 		
 	timerCallPackageFunctions('ApplyCyclePosition');

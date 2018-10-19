@@ -24,7 +24,12 @@ function timerCycle_setDisplayPosition(position)
                     state.cycle.(field)=state.cycle.(fieldList)(end);
                     state.cycle.(fieldList)(position)=state.cycle.(field);
                 elseif ischar(state.cycle.(field))
-                    state.cycle.(field)=state.cycle.(fieldList){end};
+                    if isempty(state.cycle.(fieldList))
+                        state.cycle.(field)='';
+                    else
+                        state.cycle.(field)=state.cycle.(fieldList){end};
+                    end
+                    
                     state.cycle.(fieldList){position}=state.cycle.(field);
                 else
                     disp(['state.cycle.' field ' is not numeric or char']);

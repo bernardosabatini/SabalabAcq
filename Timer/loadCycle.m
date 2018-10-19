@@ -9,9 +9,17 @@ function loadCycle(pname, fname)
 		elseif strcmp(answer, 'Yes')
 			saveCycle;
 		end
-	end
+    end
 	
-	if nargin<2
+    if nargin==1
+        fname=pname;
+        pname=state.cycle.cyclePath;
+        if ~contains(fname, '.')
+            fname=[fname '.cyc']; 
+        end
+    end
+    
+	if nargin==0
 		if ~isempty(state.cycle.cyclePath)
 			try
 				cd(state.cycle.cyclePath);
@@ -19,7 +27,7 @@ function loadCycle(pname, fname)
 			end
 		end
 		[fname, pname]=uigetfile('*.cyc', 'Choose cycle');
-	end
+    end
 
 	if ~isnumeric(fname) && ~isempty(fname)
 		try
@@ -29,39 +37,32 @@ function loadCycle(pname, fname)
 			error(['loadCycle : Unable to load ' fullfile(pname, fname) '. File may be missing or have been moved.'])
 		end
 
+        if ~isfield(cycle.cycle, 'nextCycle')
+            cycle.cycle.nextCycle='';
+        end
 		fnames=fieldnames(cycle.cycle);
 		for counter=1:length(fnames)
 			state.cycle.(fnames{counter})=cycle.cycle.(fnames{counter});
         end
-		
-% 		for counter=1:length(state.internal.cycleListNames)
-%             if isfield(cycle.cycle, [state.internal.cycleListNames{counter} 'List'])
-%                 eval(['state.' state.internal.cycleListNames{counter} 'List = cycle.cycle.' state.internal.cycleListNames{counter} 'List;']);
-%             else
-%                 disp(['Appears to have old cycle definition.  Repairing field: ' state.internal.cycleListNames{counter}]);
-%                 if isnumeric(getfield(state.cycle, state.internal.cycleListNames{counter}))
-%                     disp('... with numeric field.  Please resave the cycle');
-%                     eval(['state.cycle.' state.internal.cycleListNames{counter} 'List = ones(size(cycle.cycle.repeatsList));']);
-%                 elseif ischar(getfield(state.cycle, state.internal.cycleListNames{counter}))
-%                    eval(['state.cycle.' state.internal.cycleListNames{counter} 'List = repmat({''''}, size(cycle.cycle.repeatsList));']);
-%                    disp('... with string field.  Please resave the cycle');
-%                 end
-%             end
-%             
-% 		end
         
 		state.cycle.cycleName = fname;
 		state.cycle.cyclePath = pname;
     	timerCycle_setDisplayPosition(1);
         for counter=1:length(state.cycle.isCommonToAllPositions)
-        updateGuiByGlobal(['state.cycle.' ...
-            state.cycle.isCommonToAllPositions{counter}]);
+            updateGuiByGlobal(['state.cycle.' ...
+                state.cycle.isCommonToAllPositions{counter}]);
         end
 		
 		makeCycleMenu;
 		checkCurrentCycleInMenu;
 		state.internal.cycleChanged=0;
-		
+		state.cycle.currentCyclePosition=1;
+        state.cycle.repeatsDone=0;
+        updateGuiByGlobal('state.cycle.cycleName');
+        updateGuiByGlobal('state.cycle.currentCyclePosition');
+        updateGuiByGlobal('state.cycle.repeatsDone');        
+        setupCycleRandomList
+        
 		setStatusString('cycle loaded');
 	else
 		setStatusString('Cannot load cycle');

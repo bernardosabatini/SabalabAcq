@@ -70,7 +70,7 @@ function phSession_processDataListener(session, event)
   	if (state.phys.internal.stripeCounter==state.phys.internal.stripes) || state.phys.internal.stopInfiniteAcq % last one, process everything
  		if physInputSession.IsContinuous 
             if state.phys.internal.stopInfiniteAcq
-                 if state.files.autoSave && state.phys.settings.streamToDisk && state.phys.settings.reloadContAcq
+                 if state.phys.settings.streamToDisk && state.phys.settings.reloadContAcq %state.files.autoSave 
                     % we were in infinite mode.  We need to reload event.Data from the
                     % drive
                     if ~isempty(state.phys.internal.streamFID)
@@ -83,7 +83,7 @@ function phSession_processDataListener(session, event)
             else
                 % we are in the live mode and continuing. 
                 % write the data
-                if state.phys.settings.streamToDisk && state.files.autoSave
+                if state.phys.settings.streamToDisk % && state.files.autoSave
                     fwrite(state.phys.internal.streamFID, physData, 'float');
                 end
                 

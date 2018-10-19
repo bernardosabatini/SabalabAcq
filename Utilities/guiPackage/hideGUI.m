@@ -1,4 +1,6 @@
 function hideGUI(GUI)
-	[topName, s, f]=structNameParts(GUI);
-	eval(['global ' topName]);
-	eval(['set(' GUI ', ''Visible'', ''off'')']);
+if ishandle(GUI)
+    set(GUI, 'Visible', 'off');
+else
+	evalin('base', ['set(' GUI ', ''Visible'', ''off'')']);
+end

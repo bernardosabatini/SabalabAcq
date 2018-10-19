@@ -18,7 +18,7 @@ function timerStart_Physiology
 	
 	phSetChannelGains
 
-    if physInputSession.IsContinuous && state.phys.settings.streamToDisk && state.files.autoSave
+    if physInputSession.IsContinuous && state.phys.settings.streamToDisk  %&& state.files.autoSave
         state.phys.internal.streamFID=[];
         state.phys.internal.streamFilename='';
         try

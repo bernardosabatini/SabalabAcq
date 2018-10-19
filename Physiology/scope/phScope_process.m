@@ -57,7 +57,7 @@ function phScope_process(data)
                     peak1=peak-endline;
                     peak2=chanData(delta+peakloc)-endline;
                     peak3=chanData(2*delta+peakloc)-endline;
-                    if (peak1-peak2)*(peak3-peak2)>0
+                    if (peak1-peak2)*(peak2-peak3)>0
                         peakloc=peakloc-state.phys.scope.pointsUntilPulse(counter)+1;
                         tau=delta*(1/log(peak1/peak2)+1/log(peak2/peak3)+2/log(peak1/peak3))/3;
                         amp=(peak1*exp(peakloc/tau)+peak2*exp((peakloc+delta)/tau)+peak3*exp((peakloc+2*delta)/tau))/3;
@@ -77,7 +77,7 @@ function phScope_process(data)
                     ix1=find(Data<peak1,1,'last'); 
                     ix3=find(Data<peak3,1,'last');
     %                 warning('off')
-                    fit=polyfit(ix1:ix3,log(-Data(ix1:ix3)),1); % fit
+                    fit=polyfit(ix1:ix3,log(-Data(ix1:ix3)'),1); % fit
                     tau=-1/fit(1); 
                     amp=-exp(fit(2));
 

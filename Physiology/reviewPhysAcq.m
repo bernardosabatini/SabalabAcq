@@ -6,12 +6,6 @@ function reviewPhysAcq(n)
 		n=state.files.reviewCounter;
 	end
 	
-	if isempty(state.files.savePath)
-		disp('*** reviewPhysAcq : No data save path set');
-		setStatusString('SET SAVE PATH');
-		
-		return;
-	end
 	found=0;
 	
 	for counter=0:7

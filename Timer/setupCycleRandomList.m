@@ -1,15 +1,15 @@
 function setupCycleRandomList
 	global state
 	
-    temp=[]; phys_indx=[]; imag_indx=[];
-    if isfield(state.cycle, 'physiologyOnList')
-        phys_indx=find(state.cycle.physiologyOnList);
+    Valid=[];
+    for pIndex=find(timerGetActiveStatus())
+        Valid=unique([Valid, 
+            find(state.cycle.([lower(state.timer.packageList{pIndex}) 'OnList']))]);
     end
-    if isfield(state.cycle, 'imagingOnList')
-        imag_indx=find(state.cycle.imagingOnList);
-    end
-    Valid=unique([phys_indx,imag_indx]);
+    
+    Valid=sort(unique([find(cellfun(@(x) ~isempty(x), state.cycle.functionNameList)), Valid]));
         
+    temp=[];
 	for counter=Valid
 		if state.cycle.repeatsList(counter)>0 
 			temp(end+1:end+state.cycle.repeatsList(counter))=counter;
@@ -21,5 +21,10 @@ function setupCycleRandomList
 		state.internal.randomPositionsList=0;
 	end
 	state.internal.randomPosition=1;
+
+    state.cycle.currentCyclePosition=1;
+    state.cycle.repeatsDone=0;
+    updateGuiByGlobal('state.cycle.currentCyclePosition');
+    updateGuiByGlobal('state.cycle.repeatsDone');        
 		
 			

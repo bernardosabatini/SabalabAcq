@@ -98,7 +98,8 @@ function cyclePosition_Callback(h, eventdata, handles)
 
 function repeatsDone_Callback(hObject, eventdata, handles)
 	genericCallback(hObject);
-
+function repeatsDoneSlider_Callback(hObject, eventdata, handles)
+	genericCallback(hObject);
 function cycleName_CreateFcn(hObject, eventdata, handles)
     set(hObject,'BackgroundColor',get(0,'defaultUicontrolBackgroundColor'));
 

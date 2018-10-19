@@ -15,7 +15,7 @@ function phScope_makeOutput
             % we are in current clamp mode
             state.phys.scope.CCUsed(counter)=1;
             
-			amp=state.phys.scope.pulseAmpCC/...
+			amp(counter)=state.phys.scope.pulseAmpCC/...
                 state.phys.settings.(['pAPerVOut' chanString]);
             state.phys.scope.ampsUsed(counter)=state.phys.scope.pulseAmpCC;
 			duration=state.phys.scope.pulseWidthCC;
@@ -25,7 +25,7 @@ function phScope_makeOutput
             % not current clamp
              state.phys.scope.CCUsed(counter)=0;
 
-            amp=state.phys.scope.pulseAmpVC/...
+            amp(counter)=state.phys.scope.pulseAmpVC/...
                 state.phys.settings.(['mVPerVOut' chanString]);
             state.phys.scope.ampsUsed(counter)=state.phys.scope.pulseAmpVC;
 			duration=state.phys.scope.pulseWidthVC;
@@ -46,7 +46,7 @@ function phScope_makeOutput
     
   	for counter=1:nChans
         state.phys.scope.output(state.phys.scope.pointsUntilPulse(counter)...
-            : 3*state.phys.scope.pointsUntilPulse(counter), counter) = amp;
+            : 3*state.phys.scope.pointsUntilPulse(counter), counter) = amp(counter);
     end
 
 
