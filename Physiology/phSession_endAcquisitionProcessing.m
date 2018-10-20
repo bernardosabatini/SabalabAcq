@@ -60,7 +60,7 @@ function phSession_endAcquisitionProcessing
 		end
 
 		% store the data in a wave that contains the acq #
-		name=physTraceName(channel, state.files.lastAcquisition)
+		name=physTraceName(channel, state.files.lastAcquisition);
 		state.phys.acquisitionFiles{3, counter}=name;
 
 		waveo(name, physData(counter,:), ...
@@ -76,6 +76,7 @@ function phSession_endAcquisitionProcessing
 		% auto save to disk?
 
 		eval(['global ' name]);
+
 		if state.files.autoSave
 			save(fullfile(state.files.savePath, name), name);
 		end

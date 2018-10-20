@@ -18,6 +18,7 @@ function avgin(newData, avgName, verbose)
 		duplicateo(dataName, avgName);
 		setWaveUserDataField(avgName, 'nComponents', 1);
 		setWaveUserDataField(avgName, 'Components', {dataName});
+        setWaveUserDataField(avgName, 'name', avgName);
 	else
 		avgData=getWave(avgName, 'data');
 		if iswave(dataName)
