@@ -11,8 +11,15 @@ function timerProcess_Physiology
 	if state.files.autoSave && state.phys.settings.autosavePassiveParam 
 		save(fullfile(state.files.savePath, 'physAcqTrace'), 'physAcqTrace');
 		save(fullfile(state.files.savePath, 'physAcqTime'), 'physAcqTime');
-	end
+    end
 
+    
+    global timerAcqTime
+
+    if ~iswave('timerAcqTime')
+        wave('timerAcqTime', []);
+    end
+    
 	for counter=0:1
 		if getfield(state.phys.settings, ['channelType' num2str(counter)])>=2 % it's a clamp
 			eval(['global physCellVm' num2str(counter)]);		

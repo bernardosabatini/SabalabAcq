@@ -68,6 +68,15 @@ function [rin, rs, cm, error]=calcRs(data, dx, pulseAmp, pulseStart, pulseLength
 		rin=1000*pulseAmp/(endline-baseline)-rs;
 		cm=1000*tau*dx/rs;
 
+        if any(~isreal([tau amp rs rin cm]))
+  			disp('calcRs: complex number returned.  No fit possible')
+            rin=0;
+            rs=0;
+            cm=0;
+            error=1;
+            return
+        end
+        
 		waveo('calcRsFit', endline+amp*exp(-[0:round(pulseLength/dx)]/tau), 'xscale', [pulseStart dx]);
 		clear tau amp peak peak1 peak2 peak3 peakloc endlkine baseline
 

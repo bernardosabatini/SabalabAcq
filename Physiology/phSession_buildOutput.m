@@ -128,6 +128,7 @@ function phSession_buildOutput(force)
 %             'ScanClock');
     end
     
+    state.phys.internal.needNewOutputData=1;
     updateHeaderString('state.phys.internal.lastAuxPulsesUsed');
     updateHeaderString('state.phys.internal.lastPulsesUsed');
     updateHeaderString('state.phys.internal.lastAuxLinesUsed');
