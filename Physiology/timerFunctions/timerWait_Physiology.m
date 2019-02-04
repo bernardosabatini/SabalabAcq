@@ -1,5 +1,5 @@
 function timerWait_Physiology
-	global state
+%	global state
 	
 % 	if timerGetPackageStatus('Physiology')
 % 		return
