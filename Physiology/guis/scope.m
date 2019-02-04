@@ -134,7 +134,7 @@ function varargout = range_Callback(h, eventdata, handles, varargin)
 % --------------------------------------------------------------------
 function varargout = noteR_Callback(h, eventdata, handles, varargin)
 	global state
-
+        
     chStr= num2str(state.phys.scope.channelsUsed(1));
     if state.phys.settings.(['currentClamp' chStr])
         str='Current clamp';

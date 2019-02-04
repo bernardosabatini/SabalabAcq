@@ -1,9 +1,9 @@
 function timerWait_Physiology
 	global state
 	
-	if timerGetPackageStatus('Physiology')
-		return
-	end
+% 	if timerGetPackageStatus('Physiology')
+% 		return
+% 	end
 	
 	try
 		phTelegraphs_read

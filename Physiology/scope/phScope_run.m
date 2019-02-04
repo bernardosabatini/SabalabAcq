@@ -21,6 +21,7 @@ function phScope_run
         end
         
         phTelegraphs_read
+        phBaseline_read
         if state.phys.internal.needNewScopeDAQ
             phScope_makeSession;
             state.phys.internal.needNewScopeDAQ=0;

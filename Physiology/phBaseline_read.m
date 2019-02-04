@@ -12,15 +12,13 @@ function phBaseline_read
 		type=getfield(state.phys.settings, ['channelType' num2str(counter)]);
 		if type > 1
 			scounter=num2str(counter);
-			if eval(['state.phys.settings.currentClamp' scounter]);
-				eval(['state.phys.cellParams.vm' scounter '=round(10*baseline(1+pos*2)*state.phys.settings.mVPerVIn' scounter ...
-						'/state.phys.settings.inputGain' scounter ')/10;']);
-				eval(['state.phys.cellParams.im' scounter '=round(10*baseline(2+pos*2)*state.phys.settings.pAPerVIn' scounter ')/10;']);                
+            ind=1+pos*2;
+			if eval(['state.phys.settings.currentClamp' scounter])
+				eval(['state.phys.cellParams.vm' scounter '=round(10*baseline(ind)*state.phys.internal.channelGains(ind))/10;']);
+				eval(['state.phys.cellParams.im' scounter '=round(10*baseline(ind+1)*state.phys.internal.channelGains(ind+2))/10;']);
             else
-                state.phys.cellParams.(['im' scounter]) = ...
-                    round(10*baseline(counter+1)*state.phys.settings.(['pAPerVIn' scounter]))/10;
-                 state.phys.cellParams.(['vm' scounter]) = ...
-                     round(10*baseline(counter+2)*state.phys.settings.(['mVPerVIn' scounter]))/10;
+				eval(['state.phys.cellParams.im' scounter '=round(10*baseline(ind)*state.phys.internal.channelGains(ind))/10;']);
+				eval(['state.phys.cellParams.vm' scounter '=round(10*baseline(ind+1)*state.phys.internal.channelGains(ind+2))/10;']);
 			end
 			pos=pos+1;
 			updateGuiByGlobal(['state.phys.cellParams.vm' scounter]);
