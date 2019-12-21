@@ -15,7 +15,7 @@ function setSavePath
 			
 	setStatusString('Setting Path...');
 	state.files.savePath=pname;
-	updateFullFileName(0);
+	updateFullFileName;
 	cd(pname);
 
 	if ~isempty(state.internal.excelChannel)

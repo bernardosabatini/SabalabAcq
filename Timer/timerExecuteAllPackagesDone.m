@@ -53,7 +53,7 @@ function timerExecuteAllPackagesDone
 
     if state.files.autoSave		% BSMOD - Check status of autoSave option
         if state.internal.saveHeaderAsTxt   %TN
-            saveHeadertoTxt; %TN
+            timerSaveHeaderToTxt; %TN
         end                  %TN
         if state.notebook.autoSaveNotes
             saveNotebooks;

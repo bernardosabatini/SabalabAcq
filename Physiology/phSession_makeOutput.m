@@ -83,35 +83,35 @@ function phSession_makeOutput(force)
                 updateHeaderString(['state.phys.internal.pulseString_RCCheck']);
             end
 
-            pattern=(extraGain/gain)*state.pulses.(['pulsePattern' num2str(patternNum)]);
+            patternData=(extraGain/gain)*state.pulses.(['pulsePattern' num2str(patternNum)]);
             if ~isempty(RSPattern)
-                len=min(length(RSPattern),length(pattern));
-                pattern(1:len)=pattern(1:len)+RSPattern(1:len)/gain;
+                len=min(length(RSPattern),length(patternData));
+                patternData(1:len)=patternData(1:len)+RSPattern(1:len)/gain;
             end
             if strcmp(chanName(1:2), 'ao') || strcmp(chanName(1:3), 'aux')
-                if max(pattern)>10
-                    pattern=min(pattern,10);
+                if max(patternData)>10
+                    patternData=min(patternData,10);
                     disp(['    !!!WARNING: phSession_makeOutput: pattern ' num2str(patternNum) ' output clipped high (+10V)']);
                 end
-                if min(pattern)<-10
-                    pattern=max(pattern,-10);
+                if min(patternData)<-10
+                    patternData=max(patternData,-10);
                     disp(['    !!!WARNING: phSession_makeOutput: pattern ' num2str(patternNum) ' output clipped low (-10V)']);
                 end
             elseif strcmp(chanName(1:2), 'do')
-                if max(pattern)>1
-                    pattern=min(pattern,1);
+                if max(patternData)>1
+                    patternData=min(patternData,1);
                     disp(['    !!!WARNING: phSession_makeOutput: pattern ' num2str(patternNum) ' output clipped high (1 logical)']);
                 end
-                if min(pattern)<0
-                    pattern=max(pattern,0);
+                if min(patternData)<0
+                    patternData=max(patternData,0);
                     disp(['    !!!WARNING: phSession_makeOutput: pattern ' num2str(patternNum) ' output clipped low (0 logical)']);
                 end
             end
                 
             if isempty(physOutputData)
-                physOutputData=pattern';
+                physOutputData=patternData';
             else
-                len=max(length(pattern), size(physOutputData,1));
+                len=max(length(patternData), size(physOutputData,1));
                 
                 if len>size(physOutputData,1)
                     physOutputData(end+1:len,:)=...
@@ -120,15 +120,15 @@ function phSession_makeOutput(force)
                         len-size(physOutputData, 1), ...
                         1);
                 end
-                if len>size(pattern, 2)
-                    pattern(end+1:len)=pattern(end);		% fill with last point repeated
+                if len>size(patternData, 2)
+                    patternData(end+1:len)=patternData(end);		% fill with last point repeated
                 end
                 if strcmp(chanName(1:3), 'aux')
                     if haveControlOfAuxBoard
-                        physOutputData(1:len,end+1) = pattern';
+                        physOutputData(1:len,end+1) = patternData';
                     end
                 else
-                    physOutputData(1:len,end+1) = pattern';
+                    physOutputData(1:len,end+1) = patternData';
                 end
             end
         else

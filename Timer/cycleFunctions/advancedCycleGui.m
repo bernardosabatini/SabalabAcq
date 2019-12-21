@@ -101,10 +101,10 @@ function redefineCycle_Callback(h, eventdata, handles)
         state.cycle.callingTag=tag;
         isCommon=any(cellfun(@(x) strcmp(tag, x), state.cycle.isCommonToAllPositions));
 		if ~isCommon
-            if isnumeric(getfield(state.cycle, tag))
-                eval(['state.cycle.' tag 'List(state.cycle.displayCyclePosition)=state.cycle.' tag ';']);
+            if isnumeric(state.cycle.(tag))
+                state.cycle.([tag 'List'])(state.cycle.displayCyclePosition)=state.cycle.(tag);
             else
-                eval(['state.cycle.' tag 'List{state.cycle.displayCyclePosition}=state.cycle.' tag ';']);
+                state.cycle.([tag 'List']){state.cycle.displayCyclePosition}=state.cycle.(tag);
             end
         end
         

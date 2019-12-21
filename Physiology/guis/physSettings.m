@@ -105,8 +105,12 @@ function varargout = outputRate_Callback(h, eventdata, handles, varargin)
     global physOutputSession state
     physOutputSession.Rate=state.phys.settings.outputRate;
     state.phys.internal.needNewOutputData=1;
-
-% --------------------------------------------------------------------
+    
+function varargout = scopeRate_Callback(h, eventdata, handles, varargin)
+	genericCallback(h);
+    phScope_makeSession
+    
+    % --------------------------------------------------------------------
 function varargout = inputRate_Callback(h, eventdata, handles, varargin)
 	genericCallback(h);
     global physInputSession state

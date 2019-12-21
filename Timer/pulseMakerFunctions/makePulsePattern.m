@@ -134,7 +134,7 @@ function makePulsePattern(number, update, rate)
 	end
     eval(['state.pulses.pulsePattern' num2str(number) '= data;']);
    
-    if ~state.initializing
+    if ~state.initializing && timerGetActiveStatus('Physiology')
         if any(number==state.phys.internal.pulsesToUse) || any(number==state.phys.internal.auxPulsesToUse)
             state.phys.internal.needNewOutputData=1;
         end

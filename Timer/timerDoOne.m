@@ -34,7 +34,12 @@ function timerDoOne
 		state.timer.abort=0;
         state.internal.firstTimeThroughLoop=0;
 		timerTrigger;
-		timerCallPackageFunctions('SessionWait');		
+        
+        timerWaitForSessionEnds;
+        if state.timer.abort
+        else
+            timerRegisterPackageDone;
+        end        
 
 	elseif strcmp(val, 'ABORT')
 		state.timer.multipleAbortAttemps=state.timer.multipleAbortAttemps+1;

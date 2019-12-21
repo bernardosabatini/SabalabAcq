@@ -5,7 +5,6 @@ function [out,fname,pname,ext]=initGUIs(fileName, callCallbacks, file)
 % Author: Bernardo Sabatini 1/21/1
 %
 
-
 out=0;
 fname='';
 pname='';
@@ -29,7 +28,10 @@ callBackList={};
 currentStructure=[];
 variableList={};
 
-re= "^\s*structure\s*(?<structName>\w+)|^\s*(?<endStruct>endstructure\s*)|^\s*(?<varName>\w+)\s*(?<varVal>=(\[.*\]|{.*}|'.*'|[\-\.]*\w+))?\s*(?<rest>\w[^%]*)?(?<comment>%.*)?";
+%re= "^\s*structure\s*(?<structName>\w+)|^\s*(?<endStruct>endstructure\s*)|^\s*(?<varName>\w+)\s*(?<varVal>=(\[.*\]|{.*}|'.*'|[\-\.]*\w+))?\s*(?<rest>\w[^%]*)?(?<comment>%.*)?";
+
+% modified to handle all decimals correctly adding [+-]?\d+\.?\d*
+re= "^\s*structure\s*(?<structName>\w+)|^\s*(?<endStruct>endstructure\s*)|^\s*(?<varName>\w+)\s*(?<varVal>=(\[.*\]|{.*}|[+-]?\d+\.?\d*|'.*'|[\-\.]*\w+))?\s*(?<rest>\w[^%]*)?(?<comment>%.*)?";
 
 for lineCounter=1:length(file)				% step through each line of the file
 	if ~isempty(file{lineCounter})
@@ -90,7 +92,7 @@ for lineCounter=1:length(file)				% step through each line of the file
 						disp('this should never happen value but empty');
 						startingValue=[];
 					else
-			%			disp([fullVariableName '=' startingValue]);
+						disp([fullVariableName '=' startingValue]);
 						eval([fullVariableName '=' startingValue ';']);
 					end
 				end

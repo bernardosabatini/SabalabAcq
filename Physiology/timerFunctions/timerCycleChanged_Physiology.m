@@ -39,15 +39,15 @@ function timerCycleChanged_Physiology
                 state.phys.internal.needNewOutputData=1;
                 chan=str2num(state.cycle.callingTag(4:end));
                 % if channel is on put was off, remake output device
-                if state.cycle.(state.cycle.callingTag)>0
-                    if ~any(state.phys.internal.auxOutputChannelsUsed==chan)
-                        state.phys.internal.needNewOutputChannels=1;
-                    end
-                % if channels is off but was on, remake output device
-                else
-                    if any(state.phys.internal.auxOutputChannelsUsed==chan)
-                        state.phys.internal.needNewOutputChannels=1;
-                    end
-                end
+%                 if state.cycle.(state.cycle.callingTag)>0
+%                     if ~any(state.phys.internal.auxOutputChannelsUsed==chan)
+%                         state.phys.internal.needNewOutputChannels=1;
+%                     end
+%                 % if channels is off but was on, remake output device
+%                 else
+%                     if any(state.phys.internal.auxOutputChannelsUsed==chan)
+%                         state.phys.internal.needNewOutputChannels=1;
+%                     end
+%                 end
         end
     end
