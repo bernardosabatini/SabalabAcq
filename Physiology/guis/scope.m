@@ -4,7 +4,7 @@ global scopeInput
 %    FIG = SCOPE launch scope GUI.
 %    SCOPE('callback_name', ...) invoke the named callback.
 
-% Last Modified by GUIDE v2.5 25-Feb-2014 11:39:40
+% Last Modified by GUIDE v2.5 07-Feb-2019 07:57:01
 
 if nargin == 0  % LAUNCH GUI
 	
@@ -71,6 +71,14 @@ end
 function varargout = generic_Callback(h, eventdata, handles, varargin)
 	genericCallback(h);
 
+function varargout = doFFT_Callback(h, eventdata, handles, varargin)
+	genericCallback(h);
+    global state
+    if state.phys.scope.doFFT
+       disp('*** scope FFT: Do a scope aquisition and then plot/scale')
+       disp('***    e.g.:   plot(scopeFFT0); set(gca, ''XLim'', [0 200], ''XLimMode'', ''manual'')');
+    end
+    
 function varargout = fit_Callback(h, eventdata, handles, varargin)
 	genericCallback(h);
     global state
@@ -134,7 +142,7 @@ function varargout = range_Callback(h, eventdata, handles, varargin)
 % --------------------------------------------------------------------
 function varargout = noteR_Callback(h, eventdata, handles, varargin)
 	global state
-
+        
     chStr= num2str(state.phys.scope.channelsUsed(1));
     if state.phys.settings.(['currentClamp' chStr])
         str='Current clamp';
@@ -179,3 +187,4 @@ function channel_CreateFcn(hObject, eventdata, handles)
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end
+

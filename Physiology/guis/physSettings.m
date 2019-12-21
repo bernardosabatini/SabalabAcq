@@ -78,7 +78,7 @@ function varargout = generic_Callback(h, eventdata, handles, varargin)
 % --------------------------------------------------------------------
 function varargout = changeGains_Callback(h, eventdata, handles, varargin)
 	genericCallback(h);
-    phClamp_processSelection;
+    phSetChannelGains;
     
 % --------------------------------------------------------------------
 function varargout = changeAcqChannel_Callback(h, eventdata, handles, varargin)

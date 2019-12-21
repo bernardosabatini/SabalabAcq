@@ -23,6 +23,10 @@ function phScope_process(data)
 	
       	setWave(['scopeInput' channelString], 'data', ...
             chanData(1:4*state.phys.scope.pointsUntilPulse(counter))');
+        
+        if state.phys.scope.doFFT
+            phScope_doFFT(channel)
+        end
         drawnow
 
         if (nChans==1) || (channel==1)
