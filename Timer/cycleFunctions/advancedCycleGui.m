@@ -131,6 +131,8 @@ function redefineCycle_Callback(h, eventdata, handles)
 		disp(lasterr);
     end
     
+    setupCycleRandomList
+    
     if ~isempty(callingPackage)
         timerCallPackageFunctions('CycleChanged', callingPackage, 1);
     end

@@ -158,11 +158,15 @@ function analysis = phAnalyze_IntrinsicProperties(wName, varargin)
     analysis.checkPulseRend=rEnd;
     analysis.checkPulseTau=tau;
     analysis.deltaI=pulseAmplitude;
-	analysis.pulseV=mode(round(SR(pulseStart, pulseEnd)));
-    if isempty(analysis.pulseV)
-        analysis.pulseV=mean(round(SR(pulseStart, pulseEnd)));
+    if pulseStart && pulseEnd
+        analysis.pulseV=mode(round(SR(pulseStart, pulseEnd)));
+        if isempty(analysis.pulseV)
+            analysis.pulseV=mean(round(SR(pulseStart, pulseEnd)));
+        end
+    else 
+        analysis.pulseV=nan;
     end
-    
+
 	deltaI=pulseAmplitude;
     analysis.deltaI=deltaI;
 
