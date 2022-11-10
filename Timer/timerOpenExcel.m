@@ -1,6 +1,6 @@
 function timerOpenExcel
 	global state
-	[fname, pname] = uigetfile('*.xls', 'Choose Excel File to Open...');
+	[fname, pname] = uigetfile('*.xlsx', 'Choose Excel File to Open...');
 	if pname == 0
 		return
 	else

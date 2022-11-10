@@ -8,7 +8,8 @@ function phScope_process(data)
         channel=state.phys.scope.channelsUsed(counter);
         channelString=num2str(channel);
         
-        chanData=data(:,counter)*state.phys.scope.gainToUse(counter);
+        chanData=data(:,counter)*state.phys.scope.gainToUse(counter)/state.phys.settings.(['inputGain' channelString]);
+           
 
         % calculate the baseline based on all data before the pulse
         baseline = mean(chanData(1:state.phys.scope.pointsUntilPulse(counter)-1));

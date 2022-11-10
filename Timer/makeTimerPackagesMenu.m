@@ -23,7 +23,7 @@ function makeTimerPackagesMenu
 			else
 				uimenu(gh.timerMainControls.Packages, 'Label', packageName, 'Callback', 'selectPackageFromMenu');
 				state.timer.packageList=[state.timer.packageList packageName];
-			end
+            end
 		end
 			
 		state.timer.activePackages=zeros(1,length(flist));

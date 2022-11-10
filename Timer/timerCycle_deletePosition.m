@@ -23,3 +23,4 @@ function timerCycle_deletePosition(position)
         end
     end
 	timerCycle_setDisplayPosition(min(position, length(state.cycle.delayList)));
+    timerCycle_updateMaxCyclePos

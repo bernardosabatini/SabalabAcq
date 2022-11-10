@@ -16,6 +16,14 @@ function timerCycle_insertPosition(position)
         fieldList=fields{counter};
         if length(fieldList)>4 && strcmp('List', fieldList(end-3:end))
             field=fieldList(1:end-4);
+            if ~isfield(state.cycle, field)
+             %   disp([field ' field missing.  Creating']);
+                fff=state.cycle.(fieldList)(1);
+                if iscell(fff)
+                   fff=fff{1};
+                end
+                state.cycle.(field)=fff;
+            end
             if isnumeric(state.cycle.(field))
                 minValue=[];
                 guiName=getGuiOfGlobal(['state.cycle.' field]);
@@ -37,4 +45,6 @@ function timerCycle_insertPosition(position)
         end
     end
 	timerCycle_setDisplayPosition(position);
+    timerCycle_updateMaxCyclePos
+
 

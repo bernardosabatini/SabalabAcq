@@ -41,8 +41,28 @@ function loadCycle(pname, fname)
             cycle.cycle.nextCycle='';
         end
 		fnames=fieldnames(cycle.cycle);
+        nList=length(cycle.cycle.delayList);
+        
 		for counter=1:length(fnames)
-			state.cycle.(fnames{counter})=cycle.cycle.(fnames{counter});
+            fff=fnames{counter};
+            if length(fff)>4
+                if strcmp(fff(end-3:end),'List')
+                    if length(cycle.cycle.(fff))>nList
+                        disp(['   ' fff ' has too many entries.  Trimming. Check and resave']);
+                        state.cycle.(fff)=cycle.cycle.(fff)(1:nList);
+                    else
+            			state.cycle.(fff)=cycle.cycle.(fff);
+                        if length(cycle.cycle.(fff))<nList
+                            disp(['   ' fff ' may be corrupted and missing entries. Autofilling.  Check and resave']);
+                        	state.cycle.(fff)(end:nList)=state.cycle.(fff)(end);
+                        end
+                    end
+                else
+                    state.cycle.(fff)=cycle.cycle.(fff);
+                end
+            else
+    			state.cycle.(fff)=cycle.cycle.(fff);
+            end
         end
         
 		state.cycle.cycleName = fname;
@@ -55,6 +75,8 @@ function loadCycle(pname, fname)
 		
 		makeCycleMenu;
 		checkCurrentCycleInMenu;
+        timerCycle_updateMaxCyclePos
+
 		state.internal.cycleChanged=0;
 		state.cycle.currentCyclePosition=1;
         state.cycle.repeatsDone=0;
@@ -65,9 +87,11 @@ function loadCycle(pname, fname)
 
         addEntryToNotebook(2, ['LOADED CYCLE ' state.cycle.cycleName]);
         
-		setStatusString('cycle loaded');
+		disp(['*** cycle ' fname ' loaded']);
+		setStatusString(['cycle loaded']);
 	else
-		setStatusString('Cannot load cycle');
+		disp(['*** cannot load cycle' fname]);
+		setStatusString(['Cannot load cycle']);
 	end
 	
 	

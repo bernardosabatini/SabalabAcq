@@ -74,7 +74,7 @@ function timerProcess_Physiology
     end
 
 	try
-		if state.analysis.active
+		if 0 && state.analysis.active
 			runTraceAnalyzer(1);
 		end
 	catch

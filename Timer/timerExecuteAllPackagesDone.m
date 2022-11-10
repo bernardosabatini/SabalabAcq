@@ -23,7 +23,10 @@ function timerExecuteAllPackagesDone
         timerAcqTime.data(s+1:state.files.lastAcquisition)=NaN;
     end			
     timerAcqTime.data(state.files.lastAcquisition)=eTime;
-
+    if state.files.autoSave
+		save(fullfile(state.files.savePath, 'timerAcqTime'), 'timerAcqTime');
+    end
+    
     if ~isempty(state.internal.excelChannel) && state.files.autoSave
         try
             ddepoke(state.internal.excelChannel, ['r' num2str(25 + state.files.lastAcquisition) 'c1:r' num2str(25 + state.files.lastAcquisition) 'c5'], ...

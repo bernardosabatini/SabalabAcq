@@ -46,7 +46,8 @@ while ~isValid
             passedEnd=1;
         end
     else % we are not randomizine
-        if state.cycle.repeatsDone>=state.cycle.repeatsList(state.cycle.currentCyclePosition) % are the repeats done
+        if state.cycle.currentCyclePosition <= length(state.cycle.delayList) && ...
+                state.cycle.repeatsDone>=state.cycle.repeatsList(state.cycle.currentCyclePosition) % are the repeats done
             state.cycle.currentCyclePosition = state.cycle.currentCyclePosition + 1; % yes, advance
             state.cycle.repeatsDone=0;
         end

@@ -19,8 +19,8 @@ function phScope_makeOutput
                 state.phys.settings.(['pAPerVOut' chanString]);
             state.phys.scope.ampsUsed(counter)=state.phys.scope.pulseAmpCC;
 			duration=state.phys.scope.pulseWidthCC;
-            gain=state.phys.settings.(['mVPerVIn' chanString])...
-                /state.phys.settings.(['inputGain' chanString]);
+            gain=state.phys.settings.(['mVPerVIn' chanString]);%...
+                %/state.phys.settings.(['inputGain' chanString]);
         else
             % not current clamp
              state.phys.scope.CCUsed(counter)=0;
@@ -29,8 +29,8 @@ function phScope_makeOutput
                 state.phys.settings.(['mVPerVOut' chanString]);
             state.phys.scope.ampsUsed(counter)=state.phys.scope.pulseAmpVC;
 			duration=state.phys.scope.pulseWidthVC;
-            gain=state.phys.settings.(['pAPerVIn' chanString])...
-                /state.phys.settings.(['inputGain' chanString]);
+            gain=state.phys.settings.(['pAPerVIn' chanString]);%...
+                %/state.phys.settings.(['inputGain' chanString]);
         end
         maxDuration=max(maxDuration, duration);
         state.phys.scope.durationsUsed(counter)=duration;

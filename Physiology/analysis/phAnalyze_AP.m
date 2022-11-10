@@ -2,10 +2,11 @@ function [ results ] = phAnalyzeAP(dData, acqRate)
 %UNTITLED2 Summary of this function goes here
 %   Detailed explanation goes here
     
-    [gUp, gDown]=phUtil_FindXings(dData, 0, 1); % find the zero crossings
+    [gUp, gDown]=phUtil_FindXings(dData, -20, 1); % find the zero crossings
     gUp=floor(gUp);
     gDown=ceil(gDown);
     
+   
 	if nargin<2
 		acqRate=10;
 	end
@@ -85,8 +86,10 @@ function [ results ] = phAnalyzeAP(dData, acqRate)
 				else
 					disp('problem with ggDown');
 				end
-			end
-			results.AP_0W(counter)=ggDown(1)-ggUp(1);
+            end
+            if ~isempty(ggDown) && ~isempty(ggUp)
+    			results.AP_0W(counter)=ggDown(1)-ggUp(1);
+            end
 		end
 
 		lastMin=Imin;

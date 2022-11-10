@@ -1,13 +1,14 @@
 function setupCycleRandomList
 	global state
 	
+    nList=length(state.cycle.delayList);
     Valid=[];
     for pIndex=find(timerGetActiveStatus())
         Valid=unique([Valid, 
-            find(state.cycle.([lower(state.timer.packageList{pIndex}) 'OnList']))]);
+            find(state.cycle.([lower(state.timer.packageList{pIndex}) 'OnList'])(1:min(nList,end)))]);
     end
     
-    Valid=sort(unique([find(cellfun(@(x) ~isempty(x), state.cycle.functionNameList)), Valid]));
+    Valid=sort(unique([find(cellfun(@(x) ~isempty(x), state.cycle.functionNameList(1:min(nList, end)))), Valid]));
         
     temp=[];
 	for counter=Valid

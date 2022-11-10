@@ -22,7 +22,7 @@ function varargout = advancedCycleGui(varargin)
 
 % Edit the above text to modify the response to help advancedCycleGui
 
-% Last Modified by GUIDE v2.5 08-Feb-2011 15:48:42
+% Last Modified by GUIDE v2.5 06-Jan-2020 11:02:26
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -161,3 +161,26 @@ function useCyclePos_Callback(hObject, eventdata, handles)
 % --- Executes on button press in loadCurrentButton.
 function loadCurrentButton_Callback(hObject, eventdata, handles)
 	putCurrentInCyclePos;
+
+
+
+function maxCyclePos_Callback(hObject, eventdata, handles)
+% hObject    handle to maxCyclePos (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of maxCyclePos as text
+%        str2double(get(hObject,'String')) returns contents of maxCyclePos as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function maxCyclePos_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to maxCyclePos (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
