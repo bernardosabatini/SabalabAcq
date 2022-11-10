@@ -114,7 +114,4 @@ function initTimer(packages)
 	setStatusString('Ready to Use');
     
     state.initializing=0;
-    %try
-    %    TNSetPath;
-    %catch
-    %end
+

@@ -1,4 +1,4 @@
-function timerTrigger(freshTriggerTime)
+ function timerTrigger(freshTriggerTime)
 	if nargin<1
 		freshTriggerTime=1;
 	end

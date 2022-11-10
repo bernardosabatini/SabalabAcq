@@ -1,4 +1,4 @@
-function updateFullFileName(h)
+function updateFullFileName
 	global state
 	if ~ischar(state.files.baseName)
 		state.files.baseName='';
@@ -6,8 +6,6 @@ function updateFullFileName(h)
 	if ~ischar(state.files.savePath)
 		state.files.savePath='';
 	end
-	try
-		state.files.fullFileName=fullfile(state.files.savePath, [state.files.baseName zeroPadNum2str(state.files.fileCounter)]);
-	catch
-	end
+	
+	state.files.fullFileName=fullfile(state.files.savePath, [state.files.baseName zeroPadNum2Str(state.files.fileCounter)]);
 	

@@ -61,6 +61,7 @@ function [ results ] = phAnalyzeAP(dData, acqRate)
 
 		[~, I]=max(g3(lastMin:Imax));
 		I=lastMin+I-1-1; % the extra -1 is because of a shift in points taking the derivative
+        I=max(I,1);
         results.AP_thresh_V(counter)=dData(I); 
         results.AP_thresh_time(counter)=I;
 

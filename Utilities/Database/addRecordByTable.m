@@ -43,7 +43,7 @@ res1 = pqexec(state.db.conn, sql);
 
 if res1==0 
     disp(['addRecordByTable failed']);
-end;
+end
 
 oid=PQoidStatus(res1);
 

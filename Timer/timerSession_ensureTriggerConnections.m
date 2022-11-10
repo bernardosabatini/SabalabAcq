@@ -19,8 +19,8 @@ function madeChanges=timerSession_ensureTriggerConnections(session, driver, line
         for cIndex=triggerIndices
             foundCorrect=0;
             if ~foundCorrect && ...
-                    strcmp(session.Connections(cIndex).Destination, 'External') && ...
-                    strcmp(session.Connections(cIndex).Source, line)
+                    strcmpi(session.Connections(cIndex).Destination, 'External') && ...
+                    strcmpi(session.Connections(cIndex).Source, line)
                 foundCorrect=1;
             else
                 session.removeConnection(cIndex);

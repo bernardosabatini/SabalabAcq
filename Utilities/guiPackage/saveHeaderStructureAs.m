@@ -11,7 +11,7 @@ function out=saveHeaderStructureAs
 	if ~any(periods)								
 		fname=[fname '.txt'];
 	end		
-	updateFullFileName(0);
+	updateFullFileName;
 	cd(pname);
 	fid=fopen(fullfile(pname, fname), 'wt');
 	if fid<1

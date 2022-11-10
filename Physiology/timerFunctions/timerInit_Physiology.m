@@ -43,6 +43,8 @@ function timerInit_Physiology
 	waveo('scopeInputFit0', [], 'xscale', [0 1000/state.phys.scope.rate]);
 	waveo('scopeInput1', 0, 'xscale', [0 1000/state.phys.scope.rate]);
 	waveo('scopeInputFit1', [], 'xscale', [0 1000/state.phys.scope.rate]);
+	waveo('scopeFFT0', []);
+	waveo('scopeFFT1', []);
     
     state.phys.cellParams.breakInClock0=clock;
 	state.phys.cellParams.breakInClock1=clock;	

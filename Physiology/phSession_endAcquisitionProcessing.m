@@ -6,10 +6,11 @@ function phSession_endAcquisitionProcessing
         validCurrentClamp=0;
         validVoltageClamp=0;
 		channel=state.phys.acquisitionFiles{1,counter};			% what DA #
+        chanString=num2str(channel);
 		if (channel==0) || (channel==1)				% do series resistance processing for 1st 2 channels
-			if eval(['state.phys.settings.channelType' num2str(channel)])>1		% if channel is a clamp
+			if state.phys.settings.(['channelType' chanString])>1		% if channel is a clamp
 				% if channel is in V-clamp and a RS check pulse is selected
-				if ~eval(['state.phys.settings.currentClamp' num2str(channel)])	
+				if ~state.phys.settings.(['currentClamp' chanString])	
                     validVoltageClamp=1;
                     if state.cycle.VCRCPulse
                         % voltage clamp calculation of passive parameters
@@ -23,11 +24,11 @@ function phSession_endAcquisitionProcessing
                         if calcRsError
                             disp('processPhysData: calcRs returned an error');
                         end
-                        eval(['state.phys.cellParams.rm' num2str(channel) '=round(10*rin)/10;']);
-                        eval(['state.phys.cellParams.rs' num2str(channel) '=round(10*rs)/10;']);
-                        eval(['state.phys.cellParams.cm' num2str(channel) '=round(10*cm)/10;']);
+                        state.phys.cellParams.(['rm' chanString])=round(10*rin)/10;
+                        state.phys.cellParams.(['rs' chanString])=round(10*rs)/10;
+                        state.phys.cellParams.(['cm' chanString])=round(10*cm)/10;
                     end
-				elseif eval(['state.phys.settings.currentClamp' num2str(channel)])
+                elseif state.phys.settings.(['currentClamp' chanString])
                     validCurrentClamp=1;
                     if state.cycle.CCRCPulse
                         % current clamp check of Rin
@@ -43,19 +44,19 @@ function phSession_endAcquisitionProcessing
                             round((state.pulses.delayList(state.cycle.CCRCPulse)+state.pulses.pulseWidthList(state.cycle.CCRCPulse))/dx-1)...
                             ));
                         rin=1000*(peakV-baselineV)/state.pulses.amplitudeList(state.cycle.CCRCPulse);
-                        eval(['state.phys.cellParams.rm' num2str(channel) '=round(10*rin)/10;']);
-                        eval(['state.phys.cellParams.rs' num2str(channel) '=NaN;']);
-                        eval(['state.phys.cellParams.cm' num2str(channel) '=NaN;']);
+                        state.phys.cellParams.(['rm' chanString])=round(10*rin)/10;
+                        state.phys.cellParams.(['rs' chanString])=NaN;
+                        state.phys.cellParams.(['cm' chanString])=NaN;
                     else
-                        eval(['state.phys.cellParams.rm' num2str(channel) '=NaN;']);
-                        eval(['state.phys.cellParams.rs' num2str(channel) '=NaN;']);
-                        eval(['state.phys.cellParams.cm' num2str(channel) '=NaN;']);
+                        state.phys.cellParams.(['rm' chanString])=NaN;
+                        state.phys.cellParams.(['rs' chanString])=NaN;
+                        state.phys.cellParams.(['cm' chanString])=NaN;
                     end
                 end
                 
-				updateGuiByGlobal(['state.phys.cellParams.rm' num2str(channel)]);
-				updateGuiByGlobal(['state.phys.cellParams.rs' num2str(channel)]);
-				updateGuiByGlobal(['state.phys.cellParams.cm' num2str(channel)]);
+				updateGuiByGlobal(['state.phys.cellParams.rm' chanString]);
+				updateGuiByGlobal(['state.phys.cellParams.rs' chanString]);
+				updateGuiByGlobal(['state.phys.cellParams.cm' chanString]);
 			end
 		end
 
@@ -82,20 +83,20 @@ function phSession_endAcquisitionProcessing
 		end
 
 		% online averaging?
-		if state.phys.settings.(['avg' num2str(channel)])
-			if state.cycle.useCyclePos
-				avgName=physAvgName(state.epoch, channel, state.cycle.lastPositionUsed);
-			else
-				avgName=physAvgName(state.epoch, channel, state.phys.internal.lastPulsesUsed(1));
-			end
-
-			avgin(name, avgName);
-			state.phys.acquisitionFiles{4, counter}=avgName;
-
-			if state.files.autoSave
-				eval(['global ' avgName]);
-				save(fullfile(state.files.savePath, avgName), avgName);
-			end
+        if state.phys.settings.(['avg' chanString])
+            if state.cycle.useCyclePos
+                avgName=physAvgName(state.epoch, channel, state.cycle.lastPositionUsed);
+            else
+                avgName=physAvgName(state.epoch, channel, state.phys.internal.lastPulsesUsed(1));
+            end
+            
+            avgin(name, avgName);
+            state.phys.acquisitionFiles{4, counter}=avgName;
+            
+            if state.files.autoSave
+                eval(['global ' avgName]);
+                save(fullfile(state.files.savePath, avgName), avgName);
+            end
         end
 
 	end
@@ -103,7 +104,7 @@ function phSession_endAcquisitionProcessing
 	% Make a note in the auto notebook and save it
 	addEntryToNotebook(2, ...
 		[datestr(clock,13) ' (' num2str(state.phys.cellParams.minInCell0) ' min): Acq # ' num2str(state.files.lastAcquisition) ...
-		' CycPos ' num2str(state.cycle.currentCyclePosition) ' Rep ' num2str(state.cycle.repeatsDone) ...
-		' Patterns ' num2str(state.phys.internal.lastPulsesUsed(1))]);
+		' CycPos ' num2str(state.cycle.currentCyclePosition) ' Repeat ' num2str(state.cycle.repeatsDone) ...
+		' Patterns ' num2str(state.phys.internal.lastPulsesUsed)]);
 
 

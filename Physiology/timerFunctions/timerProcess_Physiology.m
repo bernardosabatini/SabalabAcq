@@ -21,7 +21,7 @@ function timerProcess_Physiology
     end
     
 	for counter=0:1
-		if getfield(state.phys.settings, ['channelType' num2str(counter)])>=2 % it's a clamp
+		if state.phys.settings.(['channelType' num2str(counter)])>=2 % it's a clamp
 			eval(['global physCellVm' num2str(counter)]);		
 			eval(['physCellVm' num2str(counter) '(state.files.lastAcquisition)=state.phys.cellParams.vm' num2str(counter) ';' ] );
 			eval(['global physCellIm' num2str(counter)]);		

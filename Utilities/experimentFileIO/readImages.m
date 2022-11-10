@@ -46,7 +46,7 @@ function readImages(fname, pname)
 	catch
 		disp(['readImages : ' lasterr]);
 	end
-	siFigures_udpateCLim;
+	siFigures_updateCLim;
     
     state.acq.binFactor=valueFromHeaderString('state.acq.binFactor', state.lastHeader);
     

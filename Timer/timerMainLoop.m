@@ -10,7 +10,6 @@ function timerMainLoop
     done=0;
     
     while ~done
-        change=0;
         recoveredFromPause=0;
         if state.cycle.loopingStatus==2	% we're going in after a pause
             state.cycle.loopingStatus=1;
@@ -124,7 +123,7 @@ function timerMainLoop
             return
         end
 
-        timerCallPackageFunctions('ReadyForTrigger');		
+  %      timerCallPackageFunctions('ReadyForTrigger');		
 
         setStatusString('Acquiring...');
 
@@ -135,9 +134,13 @@ function timerMainLoop
             disp(['Waiting for trigger at ' clockToString(clock) '. ']);
         end		
 
-        timerCallPackageFunctions('SessionWait');	
+        timerWaitForSessionEnds;
+        if state.timer.abort
+        else
+            timerRegisterPackageDone;
+        end        
 
-        updateGuiByGlobal('state.internal.secondsCounter');
+   %     updateGuiByGlobal('state.internal.secondsCounter');
 
         state.cycle.repeatsDone=state.cycle.repeatsDone+1;
         updateGuiByGlobal('state.cycle.repeatsDone');
